@@ -1,10 +1,12 @@
 package com.example.alieandataproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,6 +49,7 @@ public class HomeScreen extends AppCompatActivity {
 
     rv_data.setVisibility(View.GONE);
     tv_error.setVisibility(View.VISIBLE);
+    int a = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
 
     list = new ArrayList<>();
@@ -98,9 +101,12 @@ public class HomeScreen extends AppCompatActivity {
                 }
 
                 Rv_Adapter adapter = new Rv_Adapter(list,HomeScreen.this);
-                rv_data.setLayoutManager(new LinearLayoutManager(HomeScreen.this,LinearLayoutManager.VERTICAL,false));
+                if (a == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+                  rv_data.setLayoutManager(new GridLayoutManager(HomeScreen.this, 3));
+                } else {
+                  rv_data.setLayoutManager(new LinearLayoutManager(HomeScreen.this, LinearLayoutManager.VERTICAL, false));
+                }
                 rv_data.setAdapter(adapter);
-
                 rv_data.setVisibility(View.VISIBLE);
                 tv_error.setVisibility(View.GONE);
 
